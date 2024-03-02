@@ -1,45 +1,84 @@
 package Inap.web.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import Inap.web.Supporto.Enumerazioni.Professione;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
 
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @Entity
 public class Utente {
-    @GeneratedValue
+
     @Id
-    private Long id;
+    private String email;
+    private String nome;
+    private String cognome;
+    private String codiceFiscale;
+    private Date dataRegistrazione;
+    private Date dataDiNascita;
+    private String luogoDiNascita;
+    private String indirizzoCasa;
+    private String Citta;
+    private String Provincia;
+    private String numeroDiTelefono;
+    private boolean mailing; //parametro per decidere se voler ricevere o meno le email
 
-    public Long getId() {
-        return id;
+    @ElementCollection
+    private LinkedList<Integer> anniDiIscrizione;
+
+    //Questo serve per poter esprimere le preferenze (Non si salva direttamente il corso per evitare le correlazioni)
+    @ElementCollection
+    private LinkedList<Integer> preferenzeCorsi;
+
+    //La presenza di una duplice notazione è necessaria per poter permettere di inserire altro in maniera libera e non vincolata
+    //In questo modo è possibile selezionare una professione e nel caso salvarlo come stringa oppure indentificare le altre e
+    //salvare quelle.
+    private Professione professioneID;
+    private String professione;
+    //Questa stringa è a libera scrittura dell'utente che si inserisce all'interno del database il quale è libero
+    //di poter inserire le proprie competenze
+    private String competenze;
+
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "utente")
+    private LinkedList<PagamentiAnnuali> pagamentiAnnuali;
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "utente")
+    private LinkedList<PagamentiCorsi> pagamentiCorsi;
+
+    public Utente(String email, String nome, String cognome, String codiceFiscale, Date dataRegistrazione, Date dataDiNascita, String luogoDiNascita, String indirizzoCasa, String citta, String provincia, String numeroDiTelefono, LinkedList<Integer> anniDiIscrizione, Professione professioneID, String competenze) {
+        this.email = email;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.codiceFiscale = codiceFiscale;
+        this.dataRegistrazione = dataRegistrazione;
+        this.dataDiNascita = dataDiNascita;
+        this.luogoDiNascita = luogoDiNascita;
+        this.indirizzoCasa = indirizzoCasa;
+        this.Citta = citta;
+        this.Provincia = provincia;
+        this.numeroDiTelefono = numeroDiTelefono;
+        this.anniDiIscrizione = anniDiIscrizione;
+        this.professioneID = professioneID;
+        this.professione=professioneID.toString();
+        this.competenze = competenze;
+        this.mailing=true; //Può essere modificato in seguito
+        this.pagamentiAnnuali = new LinkedList<>();
+        this.pagamentiCorsi = new LinkedList<>();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Utente() {
+
     }
 
-    @OneToMany(mappedBy = "utente")
-    private Collection<PagamentiAnnuali> pagamentiAnnuali;
-
-    public Collection<PagamentiAnnuali> getPagamentiAnnuali() {
-        return pagamentiAnnuali;
-    }
-
-    public void setPagamentiAnnuali(Collection<PagamentiAnnuali> pagamentiAnnuali) {
-        this.pagamentiAnnuali = pagamentiAnnuali;
-    }
-
-    @OneToMany(mappedBy = "utente")
-    private Collection<PagamentiCorsi> pagamentiCorsi;
-
-    public Collection<PagamentiCorsi> getPagamentiCorsi() {
-        return pagamentiCorsi;
-    }
-
-    public void setPagamentiCorsi(Collection<PagamentiCorsi> pagamentiCorsi) {
-        this.pagamentiCorsi = pagamentiCorsi;
-    }
 }

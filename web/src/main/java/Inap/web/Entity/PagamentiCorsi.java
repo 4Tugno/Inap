@@ -1,32 +1,34 @@
 package Inap.web.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.Date;
+
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @Entity
+@Table(name = "pagamentiCorsi")
 public class PagamentiCorsi {
-    @GeneratedValue
+
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idPagamentoCorso",nullable = false)
+    private Integer idPagamentoCorso;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Basic
+    @Column(name = "dataPagamentoCorso", nullable = false)
+    private Date dataPagamentoCorso;
 
     @ManyToOne(optional = false)
     private Utente utente;
 
-    public Utente getUtente() {
-        return utente;
-    }
+    public PagamentiCorsi(){
 
-    public void setUtente(Utente utente) {
-        this.utente = utente;
     }
 }
