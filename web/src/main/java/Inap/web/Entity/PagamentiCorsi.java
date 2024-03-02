@@ -31,4 +31,15 @@ public class PagamentiCorsi {
     public PagamentiCorsi(){
 
     }
+
+    @ManyToOne(optional = false)
+    private Corso corso;
+
+    public Corso getCorso() {
+        return corso;
+    }
+
+    public void setCorso(Corso corso) {
+        this.corso = corso;
+    }
 }

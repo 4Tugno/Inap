@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 @Getter
@@ -21,8 +22,8 @@ public class Corso {
 
     String nomeCorso;
 
-    @OneToMany(mappedBy = "TO-DO",cascade = CascadeType.ALL)
-    List<Fattura> fattureCorso=new LinkedList<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "corso")
+    private LinkedList<PagamentiCorsi> fattureCorsi;
 
     @OneToOne(mappedBy = "idInfoCorso",cascade = CascadeType.ALL)
     InfoCorso info;
@@ -34,4 +35,5 @@ public class Corso {
     public Corso() {
 
     }
+
 }
