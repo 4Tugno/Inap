@@ -14,19 +14,23 @@ import java.util.LinkedList;
 @ToString
 @EqualsAndHashCode
 @Entity
+@Table(name = "corso")
 public class Corso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idCorso",nullable = false)
     private Integer idCorso;
 
-    String nomeCorso;
+    @Basic
+    @Column(name = "nomeCorso", nullable = false)
+    private String nomeCorso;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "corso")
     private LinkedList<PagamentiCorsi> fattureCorsi;
 
     @OneToOne(mappedBy = "idInfoCorso",cascade = CascadeType.ALL)
-    InfoCorso info;
+    private InfoCorso info;
 
     public Corso(String nomeCorso){
         this.nomeCorso=nomeCorso;

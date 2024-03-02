@@ -15,20 +15,60 @@ import java.util.LinkedList;
 @ToString
 @EqualsAndHashCode
 @Entity
+@Table(name = "utente")
 public class Utente {
 
     @Id
+    @GeneratedValue
+    @Column(name = "idutente",nullable = false)
+    private Integer idUtente;
+
+    @Basic
+    @Column(name = "email",nullable = false)
     private String email;
+
+    @Basic
+    @Column(name = "nome",nullable = false)
     private String nome;
+
+    @Basic
+    @Column(name = "cognome",nullable = false)
     private String cognome;
+
+    @Basic
+    @Column(name = "codicefiscale",nullable = false)
     private String codiceFiscale;
+
+    @Basic
+    @Column(name = "dataregistrazione",nullable = false)
     private Date dataRegistrazione;
+
+    @Basic
+    @Column(name = "datanascita",nullable = false)
     private Date dataDiNascita;
+
+    @Basic
+    @Column(name = "luogonascita",nullable = false)
     private String luogoDiNascita;
+
+    @Basic
+    @Column(name = "indirizzocasa",nullable = false)
     private String indirizzoCasa;
-    private String Citta;
-    private String Provincia;
+
+    @Basic
+    @Column(name = "citta",nullable = false)
+    private String citta;
+
+    @Basic
+    @Column(name = "provincia",nullable = false)
+    private String provincia;
+
+    @Basic
+    @Column(name = "numerotelefonico",nullable = false)
     private String numeroDiTelefono;
+
+    @Basic
+    @Column(name = "mailing",nullable = false)
     private boolean mailing; //parametro per decidere se voler ricevere o meno le email
 
     @ElementCollection
@@ -64,8 +104,8 @@ public class Utente {
         this.dataDiNascita = dataDiNascita;
         this.luogoDiNascita = luogoDiNascita;
         this.indirizzoCasa = indirizzoCasa;
-        this.Citta = citta;
-        this.Provincia = provincia;
+        this.citta = citta;
+        this.provincia = provincia;
         this.numeroDiTelefono = numeroDiTelefono;
         this.anniDiIscrizione = anniDiIscrizione;
         this.professioneID = professioneID;
